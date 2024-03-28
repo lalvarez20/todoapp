@@ -27,7 +27,7 @@
   <input type="text" [value]="persona().name" (keydown.shift.t)="clickHandler()"> 
   <hr/>
   <h1>Signal</h1>
-  <input type="text" [value]="nameSinal()" (change)="inputChangeHandler($event)"> <br/>
+  nameHandler
   <p>Nombre signal: {{nameSinal()}}</p>
   <p>Nombre2 signal: {{nameSinal()}}</p>
   <ul>
@@ -47,4 +47,13 @@
   <ng-template #elseBloque>
     Bloque else: {{ persona().name }} y soy menor
   </ng-template>
+  <hr/>
+  
+  <input type="text" [value]="persona().name" (change)="nameHandler($event)"> 
+  <div [ngSwitch]="persona().name">
+    <p *ngSwitchCase="'Luis'">Hola soy Luis</p>
+    <p *ngSwitchCase="'Mile'">Hola soy Mile</p>
+    <p *ngSwitchCase="'Mary'">Hola soy Mary</p>
+    <p *ngSwitchDefault> No vino Nadie</p>
+  </div>
 </div>
