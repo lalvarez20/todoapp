@@ -11,20 +11,20 @@
   <p>La suma de 2 + 5 es: {{ 2 + 5 }}</p>
   <p>Hola! El texto {{ name }}, proviene de una variable</p>
   <hr/>
-  <img [src]="persona.img" alt=""> <br/>
+  <img [src]="persona().img" alt=""> <br/>
   <input type="text" [value]="ejemplo"> <br/>
   <button [disabled]="disableBtn">Click me!</button> <br/>
-  <p>Soy {{persona.name}} </p>
-  <input type="number" [value]="persona.age"> 
+  <p>Soy {{persona().name}} </p>
+  <input type="number" [value]="persona().age"> 
   <hr/>
   <button (click)="clickHandler()">Click aquí!</button> <br/>
   <button (dblclick)="clickHandler()">Doble Click aquí!</button> <br/>
   <p>change</p>
-  <input type="number" [value]="persona.age" (change)="inputHandler($event)"> 
+  <input type="number" [value]="persona().age" (change)="inputHandler($event)"> 
   <p>keydown</p>
-  <input type="text" [value]="persona.name" (keydown)="keydownHandler($event)"> 
+  <input type="text" [value]="persona().name" (keydown)="keydownHandler($event)"> 
   <p>keydown shift</p>
-  <input type="text" [value]="persona.name" (keydown.shift.t)="clickHandler()"> 
+  <input type="text" [value]="persona().name" (keydown.shift.t)="clickHandler()"> 
   <hr/>
   <h1>Signal</h1>
   <input type="text" [value]="nameSinal()" (change)="inputChangeHandler($event)"> <br/>
@@ -36,4 +36,15 @@
       {{ idx }} {{ task }}
     </li>
   </ul>
+  <hr/>
+  <div *ngIf=" 1 === 1">
+    Este es el contenido del DIV
+  </div>
+  <input type="number" [value]="persona().age" (change)="ageHandler($event)">
+  <div *ngIf="persona().name === 'Luis' && persona().age >= 18; else elseBloque">
+    Otro Div con: {{ persona().name }} y edad {{persona().age}}
+  </div>
+  <ng-template #elseBloque>
+    Bloque else: {{ persona().name }} y soy menor
+  </ng-template>
 </div>
