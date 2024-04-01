@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, Injector, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Task } from '../../models/task.model';
@@ -7,7 +7,7 @@ import { Task } from '../../models/task.model';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -17,9 +17,9 @@ export class HomeComponent {
 
   injector = inject(Injector)
 
-  ngOnInit(){
+  ngOnInit() {
     const storage = localStorage.getItem('tasks');
-    if(storage){
+    if (storage) {
       const tasks = JSON.parse(storage);
       this.tasks.set(tasks);
     }
@@ -31,7 +31,7 @@ export class HomeComponent {
       const tasks = this.tasks();
       console.log(tasks);
       localStorage.setItem('tasks', JSON.stringify(tasks));
-    }, {injector: this.injector});
+    }, { injector: this.injector });
   }
 
   //type FilterBy = "all" | "pending" | "completed";
@@ -41,16 +41,16 @@ export class HomeComponent {
   tasksByFilter = computed(() => {
     const filter = this.filter();
     const tasks = this.tasks();
-    if(filter === 'pending'){
+    if (filter === 'pending') {
       return tasks.filter(task => !task.completed);
     }
-    if(filter === 'completed'){
+    if (filter === 'completed') {
       return tasks.filter(task => task.completed);
     }
     return tasks;
   })
 
-  newTaskCtrl = new FormControl('',{
+  newTaskCtrl = new FormControl('', {
     nonNullable: true,
     validators: [
       Validators.required,
@@ -58,33 +58,33 @@ export class HomeComponent {
     ]
   });
 
-  changeHandler(){
-    if(this.newTaskCtrl.valid){
+  changeHandler() {
+    if (this.newTaskCtrl.valid) {
       const taskTitle = this.newTaskCtrl.value.trim();
-      if(taskTitle !== ''){
+      if (taskTitle !== '') {
         this.addTask(taskTitle);
         this.newTaskCtrl.setValue('');
       }
     }
   }
 
-  addTask(taskTitle: string){
+  addTask(taskTitle: string) {
     const newtask = {
       id: Date.now(),
-      title:  taskTitle,
+      title: taskTitle,
       completed: false
     };
     this.tasks.update((tasks) => [...tasks, newtask]);
   }
 
-  deleteTask(idx: number){
+  deleteTask(idx: number) {
     this.tasks.update((tasks) => tasks.filter((task, position) => position !== idx));
   }
 
-  updateTask(idx: number){  
+  updateTask(idx: number) {
     this.tasks.update((tasks) => {
       return tasks.map((task, position) => {
-        if(position === idx){
+        if (position === idx) {
           return {
             ...task,
             completed: !task.completed
@@ -95,10 +95,10 @@ export class HomeComponent {
     })
   }
 
-  updateEditMode(idx: number){
+  updateEditMode(idx: number) {
     this.tasks.update((tasks) => {
       return tasks.map((task, position) => {
-        if(position === idx){
+        if (position === idx) {
           return {
             ...task,
             editing: true
@@ -112,11 +112,11 @@ export class HomeComponent {
     })
   }
 
-  updateTaskTitle(idx: number, event: Event){
+  updateTaskTitle(idx: number, event: Event) {
     const input = event.target as HTMLInputElement
     this.tasks.update((tasks) => {
       return tasks.map((task, position) => {
-        if(position === idx){
+        if (position === idx) {
           return {
             ...task,
             editing: false,
@@ -128,7 +128,7 @@ export class HomeComponent {
     })
   }
 
-  changFilter(filter: 'all' | 'pending' | 'completed'){
+  changFilter(filter: 'all' | 'pending' | 'completed') {
     this.filter.set(filter);
   }
 
