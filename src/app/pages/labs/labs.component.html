@@ -40,6 +40,10 @@
   <div *ngIf=" 1 === 1">
     Este es el contenido del DIV
   </div>
+  <h2>Nueva sintaxis Angular</h2>
+  @if (persona().name === 'Luis') {
+    <div>Esto es el DIV con: {{ persona().name }}</div>
+  }
   <input type="number" [value]="persona().age" (change)="ageHandler($event)">
   <div *ngIf="persona().name === 'Luis' && persona().age >= 18; else elseBloque">
     Otro Div con: {{ persona().name }} y edad {{persona().age}}
@@ -47,6 +51,12 @@
   <ng-template #elseBloque>
     Bloque else: {{ persona().name }} y soy menor
   </ng-template>
+  <h2>Nuevo if else</h2>
+  @if (persona().name === 'Luis' && persona().age >= 18) {
+    <strong>Soy {{ persona().name }} y soy mayor de edad </strong>
+  } @else {
+    <i>Soy menor de edad con: {{persona().age}} </i>
+  }
   <hr/>
   <input type="text" [value]="persona().name" (change)="nameHandler($event)"> 
   <div [ngSwitch]="persona().name">
@@ -74,4 +84,34 @@
   <p>
     <input type="text">
   </p>
+  <hr/>
+  <h2>Nuevo for</h2>
+  <ul>
+    Total: {{ tasks().length }}
+    @for (task of tasks(); track task; let idx=$index) {
+      <li>
+        {{ idx }} - {{ task }}
+      </li>
+    } @empty {
+      <li> <strong>La lista de tareas es vacía</strong> </li>
+    }
+  </ul>
+  <hr/>
+  <h2>Nuevo Switch</h2>
+  <div>
+    @switch (persona().name) {
+      @case ('Luis') {
+        <p>Hola soy Luis</p>
+      }
+      @case ('Mile') {
+        <p>Hola soy Mile</p>
+      }
+      @case ('Mary') {
+        <p>Hola soy Mary</p>
+      }
+      @default {
+        <p>No vino Nadie</p>
+      }
+    }
+  </div>
 </div>
